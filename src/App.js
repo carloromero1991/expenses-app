@@ -28,17 +28,22 @@ function App() {
       title: "New Desk (Wooden)",
       amount: 450,
       date: new Date(2021, 5, 12),
-    },
+    },{
+      id: "e5",
+      title: "Gas",
+      amount: 30,
+      date: new Date(2019, 2, 22),
+    }
   ];
 
-const addExpenseHandler=expense=>{
-  console.log("In App.js");
-  console.log(expenses);
-}
+  const addExpenseHandler = (expense) => {
+    console.log("In App.js");
+    console.log(expense);
+  };
 
   return (
     <div className="center-div">
-      <NewExpense />
+      <NewExpense onAddExpense={addExpenseHandler} />
       <Expenses items={expenses} />
     </div>
   );
