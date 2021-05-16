@@ -7,32 +7,30 @@ import "./Expenses.css";
 import ExpensesFilter from "./ExpensesFilter";
 
 function Expenses(props) {
-  const [expenses, setExpenses] = useState(props.items);
+  const actualYear = new Date().getFullYear().toString();
+  const [filteredYear, setFilteredYear] = useState(actualYear);
 
-  function onFilterChangeHandler(selectedYear) {
-    // console.log("Expenses, received 'enteredYear':", enteredYear);
+  const onFilterChangeHandler = (selectedYear) => {
+    setFilteredYear(selectedYear);
+  };
 
-    if (selectedYear === "") {
-      // 'expenses' will be reseted if value is empty
-      setExpenses(props.items);
-    } else {
-      // 'expenses' will be filtered
-      let filtered_expenses = props.items.filter((expense) => {
-        let expenseYear = expense.date.getFullYear().toString();
-        // console.log(expenseYear, enteredYear);
-        return expenseYear === selectedYear;
-      });
-
-      // console.log(filtered_expenses);
-      setExpenses(filtered_expenses);
-    }
-  }
+  const filtered_expenses = props.items.filter((expense) => {
+    let expenseYear = expense.date.getFullYear().toString();
+    // Show all expenses if 'filteredYear' is empty:
+    return (
+      filteredYear === "" ||
+      expenseYear === filteredYear
+    );
+  });
 
   return (
     <Card className="expenses">
-      <ExpensesFilter onFilterChange={onFilterChangeHandler} />
+      <ExpensesFilter
+        selected={filteredYear}
+        onFilterChange={onFilterChangeHandler}
+      />
       <div>
-        {expenses.map((expense) => (
+        {filtered_expenses.map((expense) => (
           <ExpenseItem
             title={expense.title}
             amount={expense.amount}
