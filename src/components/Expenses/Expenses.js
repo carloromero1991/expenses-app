@@ -9,10 +9,10 @@ import ExpensesFilter from "./ExpensesFilter";
 function Expenses(props) {
   const [expenses, setExpenses] = useState(props.items);
 
-  function onFilterChangeHandler(enteredYear) {
+  function onFilterChangeHandler(selectedYear) {
     // console.log("Expenses, received 'enteredYear':", enteredYear);
 
-    if (enteredYear === "") {
+    if (selectedYear === "") {
       // 'expenses' will be reseted if value is empty
       setExpenses(props.items);
     } else {
@@ -20,7 +20,7 @@ function Expenses(props) {
       let filtered_expenses = props.items.filter((expense) => {
         let expenseYear = expense.date.getFullYear().toString();
         // console.log(expenseYear, enteredYear);
-        return expenseYear === enteredYear;
+        return expenseYear === selectedYear;
       });
 
       // console.log(filtered_expenses);
