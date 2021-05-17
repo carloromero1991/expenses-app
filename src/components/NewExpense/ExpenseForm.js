@@ -55,8 +55,8 @@ export default function ExpenseForm(props) {
 
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
-      date: new Date(enteredDate + "T00:00:00") // Correct date bug
+      amount: +enteredAmount,
+      date: new Date(enteredDate + "T00:00:00"), // Correct date bug
     };
 
     props.onSaveExpenseData(expenseData);
