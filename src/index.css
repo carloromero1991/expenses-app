@@ -18,3 +18,39 @@ body {
 .center-div {
   text-align: center;
 }
+
+button {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  color: white;
+  border-radius: 3px;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.75);
+}
+
+button:hover {
+  filter: brightness(1.2);
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.75);
+  color: white;
+}
+button:active {
+  filter: brightness(0.9);
+  transform: scale(0.99, 0.99);
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.75);
+  color: lightgray;
+}
+
+button[type="submit"] {
+  border: 1px solid #043066;
+  background-color: #043066;
+}
+
+button.cancel {
+  border: 1px solid darkred;
+  background-color: darkred;
+}
+
+button.secondary {
+  border: 1px solid green;
+  background-color: green;
+}

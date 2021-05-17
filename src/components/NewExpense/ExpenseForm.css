@@ -23,5 +23,8 @@
 }
 
 .new-expense__actions {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
 }

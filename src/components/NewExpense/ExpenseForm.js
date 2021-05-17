@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./NewExpense.css";
+import "./ExpenseForm.css";
 
 /**
  * TODO: Add programmatic max value on date input
@@ -9,6 +9,8 @@ export default function ExpenseForm(props) {
   const [enteredTitle, setEnteredTitle] = useState(""); // Initialize state with a string
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
+  const [isAddingExpense, setIsAddingExpense] = useState(false);
+
   // const [userInput, setUserInput] = useState({
   //   enteredTitle: "",
   //   enteredAmount: "",
@@ -54,16 +56,28 @@ export default function ExpenseForm(props) {
     const expenseData = {
       title: enteredTitle,
       amount: enteredAmount,
-      date: new Date(enteredDate),
+      date: new Date(enteredDate + "T00:00:00") // Correct date bug
     };
 
     props.onSaveExpenseData(expenseData);
-    setEnteredTitle('');
-    setEnteredAmount('');
-    setEnteredDate('');
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
+    setIsAddingExpense(false);
   };
 
-  return (
+  function addNewExpenseHandler(event) {
+    setIsAddingExpense(true);
+  }
+
+  function cancelAddNewExpenseHandler(event) {
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
+    setIsAddingExpense(false);
+  }
+
+  let formContent = isAddingExpense ? (
     <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
@@ -96,8 +110,21 @@ export default function ExpenseForm(props) {
         </div>
       </div>
       <div className="new-expense__actions">
+        <button
+          type="button"
+          className="cancel"
+          onClick={cancelAddNewExpenseHandler}
+        >
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
+  ) : (
+    <button type="button" className="secondary" onClick={addNewExpenseHandler}>
+      Add New Expense
+    </button>
   );
+
+  return <div>{formContent}</div>;
 }
