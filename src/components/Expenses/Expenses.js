@@ -6,7 +6,7 @@ import ExpensesChart from "./ExpensesChart";
 import "./Expenses.css";
 
 function Expenses(props) {
-  const actualYear = new Date().getFullYear().toString();
+  const actualYear = ""; // new Date().getFullYear().toString();
   const [filteredYear, setFilteredYear] = useState(actualYear);
 
   const onFilterChangeHandler = (selectedYear) => {
