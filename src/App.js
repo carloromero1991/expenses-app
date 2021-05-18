@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import NewExpense from "./components/NewExpense/NewExpense";
 import Expenses from "./components/Expenses/Expenses";
 
+import IndexedDB from "./IndexedDB";
+
 function App() {
-  const DUMMY_EXPENSES = [
+  /*   const DUMMY_EXPENSES = [
     {
       id: "e1",
       title: "Toilet Paper",
@@ -29,9 +31,18 @@ function App() {
       amount: 450,
       date: new Date(2021, 5, 12),
     },
-  ];
+  ]; */
 
-  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+  const [expenses, setExpenses] = useState({});
+
+  IndexedDB()
+    .GetData("expenses-app","expenses")
+    .then((data) => {
+      setExpenses(data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
