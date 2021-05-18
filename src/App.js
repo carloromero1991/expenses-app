@@ -5,6 +5,9 @@ import Expenses from "./components/Expenses/Expenses";
 
 import IndexedDB from "./IndexedDB";
 
+// Control variable:
+let gotData = false;
+
 function App() {
   /*   const DUMMY_EXPENSES = [
     {
@@ -34,20 +37,39 @@ function App() {
   ]; */
 
   const [expenses, setExpenses] = useState({});
+  const idbConfig = {
+    dbName: "expenses-app",
+    storeName: "expenses",
+    indexes: ["id", "title", "amount", "date"],
+  };
 
-  IndexedDB()
-    .GetData("expenses-app","expenses")
-    .then((data) => {
-      setExpenses(data);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  if (!gotData) {
+    IndexedDB.GetDataAsync(idbConfig)
+      .then((data) => {
+        gotData = true;
+        // console.log("IndexedDB().GetData() from App has finished");
+        setExpenses(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   const addExpenseHandler = (expense) => {
-    setExpenses((prevExpenses) => {
-      return [expense, ...prevExpenses];
-    });
+    console.log("addExpenseHandler", expense);
+
+    IndexedDB.SaveDataAsync(idbConfig, expense)
+      .then((data) => {
+        gotData = true;
+        // console.log("IndexedDB().SaveDataAsync() from App has finished");
+
+        setExpenses((prevExpenses) => {
+          return [expense, ...prevExpenses];
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   let content = (
