@@ -3,6 +3,13 @@ import React from "react";
 import "./ExpensesFilter.css";
 
 const ExpensesFilter = (props) => {
+  const actualYear = new Date().getFullYear();
+  let years = [];
+
+  for (let year = actualYear; year >= 2019; year--) {
+    years.push(year);
+  }
+
   function yearFilterChangeHandler(yearFilter) {
     const selectedYear = yearFilter.target.value;
     props.onFilterChange(selectedYear);
@@ -14,10 +21,11 @@ const ExpensesFilter = (props) => {
         <label>Filter by year</label>
         <select value={props.selected} onChange={yearFilterChangeHandler}>
           <option value="">All</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
-          <option value="2019">2019</option>
+          {years.map((year) => (
+            <option value={year} key={year}>
+              {year}
+            </option>
+          ))}
         </select>
       </div>
     </div>
