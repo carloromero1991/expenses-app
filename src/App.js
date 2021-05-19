@@ -1,40 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import NewExpense from "./components/NewExpense/NewExpense";
 import Expenses from "./components/Expenses/Expenses";
 
 import IndexedDB from "./IndexedDB";
 
-// Control variable:
-let gotData = false;
+const idbConfig = {
+  dbName: "expenses-app",
+  storeName: "expenses",
+  indexes: ["id", "title", "amount", "date"],
+};
 
 function App() {
-  const [expenses, setExpenses] = useState({});
-  const idbConfig = {
-    dbName: "expenses-app",
-    storeName: "expenses",
-    indexes: ["id", "title", "amount", "date"],
-  };
-
-  if (!gotData) {
+  const [expenses, setExpenses] = useState([]);
+  useEffect(() => {
     IndexedDB.GetDataAsync(idbConfig)
       .then((data) => {
-        gotData = true;
-        // console.log("IndexedDB().GetData() from App has finished");
+        console.log("IndexedDB.GetData() from App has finished");
         setExpenses(data);
       })
       .catch((err) => {
         console.error(err);
       });
-  }
+  }, []);
 
   const addExpenseHandler = (expense) => {
     // console.log("addExpenseHandler", expense);
     IndexedDB.SaveDataAsync(idbConfig, expense)
       .then((result) => {
-        gotData = true;
-        // console.log("IndexedDB().SaveDataAsync() from App has finished");
-
         setExpenses((prevExpenses) => {
           return [expense, ...prevExpenses];
         });
