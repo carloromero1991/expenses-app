@@ -4,7 +4,7 @@ import "./ExpensesList.css";
 
 export default function ExpensesList(props) {
   if (props.items.length === 0) {
-    return <h3>No expenses found.</h3>;
+    return <p>No expenses found.</p>;
   }
 
   return (
