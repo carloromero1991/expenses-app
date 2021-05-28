@@ -1,42 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import NewExpense from "./components/NewExpense/NewExpense";
 import Expenses from "./components/Expenses/Expenses";
 
-function App() {
-  const DUMMY_EXPENSES = [
-    {
-      id: "e1",
-      title: "Toilet Paper",
-      amount: 94.12,
-      date: new Date(2020, 7, 14),
-    },
-    {
-      id: "e2",
-      title: "New TV",
-      amount: 799.49,
-      date: new Date(2021, 2, 12),
-    },
-    {
-      id: "e3",
-      title: "Car Insurance",
-      amount: 294.67,
-      date: new Date(2020, 2, 28),
-    },
-    {
-      id: "e4",
-      title: "New Desk (Wooden)",
-      amount: 450,
-      date: new Date(2021, 5, 12),
-    },
-  ];
+import IndexedDB from "./IndexedDB";
 
-  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+const idbConfig = {
+  dbName: "expenses-app",
+  storeName: "expenses",
+  indexes: ["id", "title", "amount", "date"],
+};
+
+function App() {
+  const [expenses, setExpenses] = useState([]);
+  useEffect(() => {
+    IndexedDB.GetDataAsync(idbConfig)
+      .then((data) => {
+        console.log("IndexedDB.GetData() from App has finished");
+        setExpenses(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const addExpenseHandler = (expense) => {
-    setExpenses((prevExpenses) => {
-      return [expense, ...prevExpenses];
-    });
+    // console.log("addExpenseHandler", expense);
+    IndexedDB.SaveDataAsync(idbConfig, expense)
+      .then((result) => {
+        setExpenses((prevExpenses) => {
+          return [expense, ...prevExpenses];
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   let content = (
