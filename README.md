@@ -19,6 +19,7 @@ The purpose of this project is to create a modern web application, and at the sa
   - [x] Save items in store
   - [ ] Edit saved items
   - [ ] Remove items
+- [ ] Implement user accounts
 - [ ] Change UI design to improve usability:
   - [ ] Add themes, spinners, and user interaction feedback.
   - [ ] Row sorting
