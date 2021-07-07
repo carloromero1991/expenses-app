@@ -1,10 +1,12 @@
 
 # Expenses App
-A personal expenses-tracking web application made with the [React](https://reactjs.org/) Javascript library.
+An expenses-tracking web application for home use, made with the [React](https://reactjs.org/) Javascript library.
 
 ## Overview
 
-The purpose of this project is to create a modern web application, and at the same to practice what I learn about React.
+The purpose of this project is to create a modern web application and at the same to practice what I learn about React.
+
+DEMO [HERE](https://musing-mestorf-2a0913.netlify.app/)
 
 ![UI Picture](./expenses-app.png)
 
@@ -24,6 +26,3 @@ The purpose of this project is to create a modern web application, and at the sa
   - [ ] Add themes, spinners, and user interaction feedback.
   - [ ] Row sorting
   - [ ] Add accessibility
-
-
-
